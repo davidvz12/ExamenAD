@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 public class Conexion {
 
     public Connection connection;
@@ -38,6 +39,24 @@ public class Conexion {
         }
     }
 
-  
+  public  Usuarios Loguearse(String usu, String ct) {
+      Usuarios usuarios=new Usuarios();
+        try {
+            ResultSet rs = statement.executeQuery("select id_user,usuario,tipo,estado from usuarios where usuario='" + usu + "' and clave='" + ct + "'");
+            while (rs.next()) {
+                usuarios.setId_user(Integer.parseInt(rs.getString("id_user")));
+                usuarios.setEstado(rs.getString("estado"));
+                usuarios.setTipo(rs.getString("tipo"));
+                usuarios.setTipo(rs.getString("usuario"));
+            }
+            rs.close();
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return usuarios;
+        
+    }
 
 }
